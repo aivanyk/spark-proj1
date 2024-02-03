@@ -2,8 +2,7 @@
   with:
     # Repository name with owner. For example, actions/checkout
     # Default: ${{ github.repository }}
-    repository: |
-      Node
+    repository: ${{ aivanyk/spark-proj1 }}
 
     # The branch, tag or SHA to checkout. When checking out the repository that
     # triggered a workflow, this defaults to the reference or SHA for that event.
@@ -61,7 +60,8 @@
     # Do a sparse checkout on given patterns. Each pattern should be separated with
     # new lines.
     # Default: null
-    sparse-checkout: ''
+    sparse-checkout: |
+      Node
 
     # Specifies whether to use cone-mode when doing a sparse checkout.
     # Default: true
@@ -103,7 +103,7 @@
     # https://my-ghes-server.example.com
     github-server-url: ''
 
-- uses: proj1/checkout
+- uses: proj1/node
   with: 
     node-version: 18
 
