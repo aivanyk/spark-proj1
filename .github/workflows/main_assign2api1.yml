@@ -76,4 +76,5 @@ jobs:
           app-name: 'assign2api1'
           slot-name: 'Production'
           package: ${{ env.AZURE_FUNCTIONAPP_PACKAGE_PATH }}
+          storage-account-name: 'aivanyk'
           
