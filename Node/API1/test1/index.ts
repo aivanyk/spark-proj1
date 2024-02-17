@@ -12,7 +12,7 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     const name = (req.query.name || (req.body && req.body.name));
     const responseMessage = name
         ? "Hello, " + name + ". This HTTP triggered function executed successfully."
-        : "Today's date is " + dateString;
+        : "Today's date is " + dateString; 
 
     context.res = {
         // status: 200, /* Defaults to 200 */
