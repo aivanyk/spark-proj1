@@ -12,6 +12,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "Node/WEB/**"
 
 env:
   AZURE_WEBAPP_NAME: assign1node # set this to your application's name
