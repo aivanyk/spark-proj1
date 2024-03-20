@@ -1,6 +1,24 @@
-import { AzureFunction, Context, HttpRequest } from "@azure/functions"
+import { app, HttpResponseInit, InvocationContext, output, AzureFunction, Context, HttpRequest } from "@azure/functions"
 import { DefaultAzureCredential } from "@azure/identity";
 import { SecretClient } from "@azure/keyvault-secrets";
+
+const queueOutput = output.storageQueue({
+    queueName: 'assign2api1queue',
+    connection: 'MyStorageConnectionAppSetting',
+});
+
+export async function httpTrigger1(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
+    const body = await request.text();
+    context.extraOutputs.set(queueOutput, body);
+    return { body: 'Created queue item.' };
+}
+
+app.http('httpTrigger1', {
+    methods: ['GET', 'POST'],
+    authLevel: 'anonymous',
+    extraOutputs: [queueOutput],
+    handler: httpTrigger1,
+});
 
 const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
     context.log('HTTP trigger function processed a request.');
