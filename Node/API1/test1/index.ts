@@ -1,4 +1,4 @@
-import { app, HttpResponseInit, InvocationContext, output, AzureFunction, Context, HttpRequest } from "@azure/functions"
+import { app, HttpResponseInit, InvocationContext, output, HttpRequest } from "@azure/functions"
 import { DefaultAzureCredential } from "@azure/identity";
 import { SecretClient } from "@azure/keyvault-secrets";
 
@@ -7,20 +7,13 @@ const queueOutput = output.storageQueue({
     connection: 'MyStorageConnectionAppSetting',
 });
 
-export async function httpTrigger1(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
-    const body = await request.text();
-    context.extraOutputs.set(queueOutput, body);
-    return { body: 'Created queue item.' };
-}
+// export async function httpTrigger1(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
+//     const body = await request.text();
+//     context.extraOutputs.set(queueOutput, body);
+//     return { body: 'Created queue item.' };
+// }
 
-app.http('httpTrigger1', {
-    methods: ['GET', 'POST'],
-    authLevel: 'anonymous',
-    extraOutputs: [queueOutput],
-    handler: httpTrigger1,
-});
-
-const httpTrigger: AzureFunction = async function (context: Context, req: HttpRequest): Promise<void> {
+export async function httpTrigger(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     context.log('HTTP trigger function processed a request.');
 
     const keyVaultName = "assign4KV";
@@ -37,10 +30,12 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
         secretValue = secretBundle.value;
         context.log(`The value of the secret is: ${secretValue}`);
     } catch (error) {
-        context.log.error(`Failed to retrieve the secret from Azure Key Vault: ${error}`);
+        context.error(`Failed to retrieve the secret from Azure Key Vault: ${error}`);
         secretValue = "Error retrieving the secret.";
     }
 
+    const body = await request.text();
+    context.extraOutputs.set(queueOutput, body);
 
     // Get the current date
     const today = new Date();
@@ -48,16 +43,22 @@ const httpTrigger: AzureFunction = async function (context: Context, req: HttpRe
     // Format today's date as a string (e.g., '2024-02-16')
     const dateString = today.toISOString().split('T')[0];
 
-    const name = (req.query.name || (req.body && req.body.name));
+    const name = request.query.get('name') || (await request.text());
     const responseMessage = name
         ? "Hello, " + name + ". This HTTP triggered function executed successfully."
         : "Today's date is " + dateString; 
 
-    context.res = {
+    return {
         // status: 200, /* Defaults to 200 */
         body: responseMessage
     };
 
 };
 
-export default httpTrigger;
+// export default httpTrigger;
+app.http('httpTrigger1', {
+    methods: ['GET', 'POST'],
+    authLevel: 'anonymous',
+    extraOutputs: [queueOutput],
+    handler: httpTrigger,
+});
