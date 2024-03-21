@@ -10,6 +10,7 @@ export async function httpTrigger(request: HttpRequest, context: InvocationConte
 
     context.log(`The value of the secret is: ${process.env.KVsecret2}`);
     const body = await request.text();
+    context.log(body);
     context.extraOutputs.set(queueOutput, body);
 
     // Get the current date
@@ -18,7 +19,7 @@ export async function httpTrigger(request: HttpRequest, context: InvocationConte
     // Format today's date as a string (e.g., '2024-02-16')
     const dateString = today.toISOString().split('T')[0];
 
-    const name = request.query.get('name') || (await request.text());
+    const name = request.query.get('name') || body;
     const responseMessage = name
         ? "Hello, " + name + ". This HTTP triggered function executed successfully."
         : "Today's date is " + dateString; 
