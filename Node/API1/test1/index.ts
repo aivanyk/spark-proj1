@@ -1,16 +1,14 @@
 import { app, HttpResponseInit, InvocationContext, output, HttpRequest } from "@azure/functions"
-import { DefaultAzureCredential } from "@azure/identity";
-import { SecretClient } from "@azure/keyvault-secrets";
 
 const queueOutput = output.storageQueue({
     queueName: 'assign2api1queue',
-    connection: 'MyStorageConnectionAppSetting',
+    connection: process.env.MyStorageConnectionAppSetting,
 });
 
 export async function httpTrigger(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     context.log('HTTP trigger function processed a request.');
 
-    context.log(`The value of the secret is: ${'KVsecret2'}`);
+    context.log(`The value of the secret is: ${process.env.KVsecret2}`);
     const body = await request.text();
     context.extraOutputs.set(queueOutput, body);
 

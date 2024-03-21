@@ -19,7 +19,7 @@ app.use('/', express.static('frontend/build'));
 // });
 
 app.get('/api', async (req, res) => {
-  res.send(`Secret Value: ${'KVsecret1'}`);
+  res.send(`Secret Value: ${process.env.KVsecret1}`);
 });
 
 app.listen(port, () => {
