@@ -27,3 +27,4 @@ jobs:
           acrName: assign2api2
           containerAppName: assign2api2app
           resourceGroup: 519Containers
+          environmentVariables: storageacess=secretref:https://assign4kv.vault.azure.net/secrets/api1storagequeue kvsecret3=secretref:https://assign4kv.vault.azure.net/secrets/secret3
