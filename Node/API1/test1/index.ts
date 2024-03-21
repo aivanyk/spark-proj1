@@ -2,7 +2,7 @@ import { app, HttpResponseInit, InvocationContext, output, HttpRequest } from "@
 
 const queueOutput = output.storageQueue({
     queueName: 'assign2api1queue',
-    connection: process.env.MyStorageConnectionAppSetting,
+    connection: 'MyStorageConnectionAppSetting',
 });
 
 export async function httpTrigger(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
