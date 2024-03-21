@@ -10,7 +10,6 @@ export async function httpTrigger(request: HttpRequest, context: InvocationConte
 
     context.log(`The value of the secret is: ${process.env.KVsecret2}`);
     const body = await request.text();
-    context.log(body);
     context.extraOutputs.set(queueOutput, body);
 
     // Get the current date
