@@ -7,12 +7,6 @@ const queueOutput = output.storageQueue({
     connection: 'MyStorageConnectionAppSetting',
 });
 
-export async function httpTrigger1(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
-    const body = await request.text();
-    context.extraOutputs.set(queueOutput, body);
-    return { body: 'Created queue item.' };
-}
-
 export async function httpTrigger(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     context.log('HTTP trigger function processed a request.');
 
@@ -56,7 +50,7 @@ export async function httpTrigger(request: HttpRequest, context: InvocationConte
 };
 
 // export default httpTrigger;
-app.http('httpTrigger', {
+app.http('test1', {
     methods: ['GET', 'POST'],
     authLevel: 'anonymous',
     extraOutputs: [queueOutput],
