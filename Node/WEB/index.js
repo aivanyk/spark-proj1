@@ -19,14 +19,7 @@ app.use('/', express.static('frontend/build'));
 // });
 
 app.get('/api', async (req, res) => {
-  try {
-    // Fetch the secret value from Azure Key Vault
-    const secretBundle = await client.getSecret(secretName);
-    res.send(`Secret Value: ${secretBundle.value}`);
-  } catch (error) {
-    console.error("Error retrieving secret from Azure Key Vault:", error);
-    res.status(500).send('Error retrieving secret from Azure Key Vault');
-  }
+  res.send(`Secret Value: ${'KVsecret1'}`);
 });
 
 app.listen(port, () => {

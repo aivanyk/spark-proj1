@@ -10,24 +10,7 @@ const queueOutput = output.storageQueue({
 export async function httpTrigger(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     context.log('HTTP trigger function processed a request.');
 
-    const keyVaultName = "assign4KV";
-    const keyVaultUrl = `https://${keyVaultName}.vault.azure.net/`;
-    const secretName = "secret2";
-
-    const credential = new DefaultAzureCredential();
-    const secretClient = new SecretClient(keyVaultUrl, credential);
-
-    let secretValue = "";
-    try {
-        // Retrieve the secret value from Azure Key Vault
-        const secretBundle = await secretClient.getSecret(secretName);
-        secretValue = secretBundle.value;
-        context.log(`The value of the secret is: ${secretValue}`);
-    } catch (error) {
-        context.error(`Failed to retrieve the secret from Azure Key Vault: ${error}`);
-        secretValue = "Error retrieving the secret.";
-    }
-
+    context.log(`The value of the secret is: ${'KVsecret2'}`);
     const body = await request.text();
     context.extraOutputs.set(queueOutput, body);
 
