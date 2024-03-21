@@ -2,16 +2,16 @@ import { app, HttpResponseInit, InvocationContext, output, HttpRequest } from "@
 import { DefaultAzureCredential } from "@azure/identity";
 import { SecretClient } from "@azure/keyvault-secrets";
 
-// const queueOutput = output.storageQueue({
-//     queueName: 'assign2api1queue',
-//     connection: 'MyStorageConnectionAppSetting',
-// });
+const queueOutput = output.storageQueue({
+    queueName: 'assign2api1queue',
+    connection: 'MyStorageConnectionAppSetting',
+});
 
-// export async function httpTrigger1(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
-//     const body = await request.text();
-//     context.extraOutputs.set(queueOutput, body);
-//     return { body: 'Created queue item.' };
-// }
+export async function httpTrigger1(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
+    const body = await request.text();
+    context.extraOutputs.set(queueOutput, body);
+    return { body: 'Created queue item.' };
+}
 
 export async function httpTrigger(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     context.log('HTTP trigger function processed a request.');
@@ -35,7 +35,7 @@ export async function httpTrigger(request: HttpRequest, context: InvocationConte
     }
 
     const body = await request.text();
-    // context.extraOutputs.set(queueOutput, body);
+    context.extraOutputs.set(queueOutput, body);
 
     // Get the current date
     const today = new Date();
@@ -59,6 +59,6 @@ export async function httpTrigger(request: HttpRequest, context: InvocationConte
 app.http('httpTrigger', {
     methods: ['GET', 'POST'],
     authLevel: 'anonymous',
-    // extraOutputs: [queueOutput],
+    extraOutputs: [queueOutput],
     handler: httpTrigger,
 });
