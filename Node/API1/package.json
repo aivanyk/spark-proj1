@@ -2,7 +2,7 @@
   "name": "",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/test1/*.js",
+  "main": "dist/{test1/*.js,UploadFile/*.js}",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",

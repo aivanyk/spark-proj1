@@ -2,29 +2,6 @@ import React, { useState, useEffect } from 'react';
 import './index.css';
 import axios from 'axios';
 
-const mockImages = [
-    {
-      url: 'https://via.placeholder.com/150',
-      description: 'Image 1 Description'
-    },
-    {
-      url: 'https://via.placeholder.com/150',
-      description: 'Image 2 Description'
-    },
-    {
-      url: 'https://via.placeholder.com/150',
-      description: 'Image 3 Description'
-    },
-    {
-      url: 'https://via.placeholder.com/150',
-      description: 'Image 4 Description'
-    },
-    {
-      url: 'https://via.placeholder.com/150',
-      description: 'Image 5 Description'
-    },
-  ];
-
 const ImageGallery = () => {
   console.log("heyheyhey");
   // const [images, setImages] = useState(mockImages);
