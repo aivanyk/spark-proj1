@@ -2,6 +2,8 @@ const express = require('express');
 const axios = require('axios');
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
+const fs = require('fs');
+const FormData = require('form-data');
 
 const app = express();
 const port = process.env.PORT || 3000
@@ -71,7 +73,7 @@ app.get('/api', async (req, res) => {
   res.send(`Secret Value: ${process.env.KVsecret1}`);
 });
 
-app.post('/upload', upload.single('image'), (req, res) => {
+app.post('/upload', upload.single('filename'), (req, res) => {
   const accessToken = req.headers['x-ms-token-aad-access-token'];
   const file = req.file;
   // Construct form-data to be sent to API1
@@ -85,10 +87,10 @@ app.post('/upload', upload.single('image'), (req, res) => {
   };
 
   // Make a POST request to API1 to upload the image
-  axios.post(`${API1_BASE_URL}/UploadFile`, formData, { headers })
+  axios.post(`${API1_BASE_URL}/UploadFile?`, formData, { headers })
     .then(apiResponse => res.json(apiResponse.data))
     .catch(error => {
-      console.error('Error uploading to API1:', error);
+      context.error('Error uploading to API1:', error);
       res.status(500).send('Error uploading image');
     });
 });
