@@ -322,3 +322,5 @@ paket-files/
 __pycache__/
 *.pyc
 
+# test_image
+test_image/
