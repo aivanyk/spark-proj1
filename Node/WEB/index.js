@@ -32,37 +32,37 @@ const mockImages = [
   },
 ];
 
-const refreshToken = async function (req, _, next) {
+// const refreshToken = async function (req, _, next) {
 
-  // Set default middleware values
-  req.tokenMiddleware = {
-    "token": "",
-    "decoded": ""
-  };
+//   // Set default middleware values
+//   req.tokenMiddleware = {
+//     "token": "",
+//     "decoded": ""
+//   };
 
-  // Get token from injected headers
-  req.tokenMiddleware.token = req.headers['x-ms-token-aad-access-token'];
+//   // Get token from injected headers
+//   req.tokenMiddleware.token = req.headers['x-ms-token-aad-access-token'];
   
-  if (!req.tokenMiddleware.token) {
-    return next();
-  }
+//   if (!req.tokenMiddleware.token) {
+//     return next();
+//   }
 
-  // Decode token
-  req.tokenMiddleware.decoded = jwt_decode(req.tokenMiddleware.token);
+//   // Decode token
+//   req.tokenMiddleware.decoded = jwt_decode(req.tokenMiddleware.token);
 
-  // Check if token is expired
-  req.tokenMiddleware.isExpired = isTokenExpired(req.tokenMiddleware.decoded.exp);
+//   // Check if token is expired
+//   req.tokenMiddleware.isExpired = isTokenExpired(req.tokenMiddleware.decoded.exp);
 
-  // If token is expired, refresh it
-  if (req.tokenMiddleware.isExpired.expired) {
+//   // If token is expired, refresh it
+//   if (req.tokenMiddleware.isExpired.expired) {
 
-    const refreshUrl = `https://${req.headers.host}/.auth/refresh`;
-    req.tokenMiddleware.refreshedTokenResult = await refreshTokenInMiddleware(refreshUrl, req.tokenMiddleware.token);
-  }
-  return next();
-}
+//     const refreshUrl = `https://${req.headers.host}/.auth/refresh`;
+//     req.tokenMiddleware.refreshedTokenResult = await refreshTokenInMiddleware(refreshUrl, req.tokenMiddleware.token);
+//   }
+//   return next();
+// }
 
-app.use(refreshToken);
+// app.use(refreshToken);
 app.use('/', express.static('frontend/build'));
 
 // app.get('/api', (req, res) => {
