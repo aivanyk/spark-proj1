@@ -2,7 +2,7 @@
   "name": "",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/{test1/*.js,UploadFile/*.js}",
+  "main": "dist/{test1/*.js,UploadFile/*.js,getImages/*.js}",
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
@@ -12,14 +12,19 @@
     "test": "echo \"No tests yet...\""
   },
   "dependencies": {
+    "@azure/functions": "^4.3.0",
     "@azure/identity": "^4.0.1",
     "@azure/keyvault-secrets": "^4.8.0",
-    "@azure/functions": "^4.3.0"
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "parse-multipart": "^1.0.4"
   },
   "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/multer": "^1.4.11",
     "@types/node": "18.x",
     "azure-functions-core-tools": "^4.x",
-    "typescript": "^4.0.0",
-    "rimraf": "^5.0.0"
+    "rimraf": "^5.0.0",
+    "typescript": "^4.0.0"
   }
 }

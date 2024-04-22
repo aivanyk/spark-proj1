@@ -1,16 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import './index.css';
 import axios from 'axios';
 
+const MAX_FILES = 10;
+
 const ImageGallery = () => {
-  console.log("heyheyhey");
   // const [images, setImages] = useState(mockImages);
   const [images, setImages] = useState([]);
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFiles, setSelectedFiles] = useState([]);
 
   const fetchImages = async () => {
     try {
       const response = await axios.get('/images'); 
+      console.log(response)
       setImages(response.data); 
     } catch (error) {
       console.error('Error fetching images', error);
@@ -18,19 +20,36 @@ const ImageGallery = () => {
   };
 
   const handleFileSelect = (event) => {
-    setSelectedFile(event.target.files[0]);
+    if (event.target.files.length > MAX_FILES) {
+      alert(`You can only upload up to ${MAX_FILES} files.`);
+      // Clear the selected files
+      event.target.value = '';
+    } else {
+      setSelectedFiles(Array.from(event.target.files));
+    }
   };
-
+  
   const handleFileUpload = async () => {
-    if (selectedFile) {
+    if (selectedFiles && selectedFiles.length > 0) {
       const formData = new FormData();
-      formData.append('file', selectedFile);
-
+      selectedFiles.forEach((file, index) => {
+        // console.log(file);
+        formData.append('filename', file);
+      });
+      console.log("111");
+      for (let [key, value] of formData.entries()) {
+        console.log(key, value);
+      }
+  
       try {
-        await axios.post('/upload', formData); 
-        fetchImages(); 
+        await axios.post('/upload', formData, {
+          // headers: {
+          //   'Content-Type': 'multipart/form-data',
+          // },
+        });
+        fetchImages();
       } catch (error) {
-        console.error('Error uploading file', error);
+        console.error('Error uploading files', error);
       }
     }
   };
@@ -43,17 +62,32 @@ const ImageGallery = () => {
     <div>
       <h1>Aivanyk's Photo App</h1>
       <div>
-        <input type="file" onChange={handleFileSelect} />
+        <input type="file" name="filename" multiple onChange={handleFileSelect} />
         <button onClick={handleFileUpload}>Upload</button>
       </div>
       <h1> </h1>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>
-        {images.map((image, index) => (
-          <div key={index}>
-            <img src={image.url} alt={image.description} style={{ width: '150px', height: '150px' }} />
-            <p>{image.description}</p>
+      {images.map((image, index) => (
+          <div key={index} style={{
+              margin: '20px',
+              border: '2px solid black', 
+              borderRadius: '8px',        
+              padding: '10px',            
+              display: 'flex',           
+              flexDirection: 'column',  
+              alignItems: 'center',      
+              justifyContent: 'center'   
+          }}>
+              <img src={image.thumbnailURL} alt={image.Filename} style={{ 
+                  maxWidth: '200px', 
+                  maxHeight: '200px',
+                  width: 'auto',          
+                  height: 'auto'          
+              }} />
+              <p>{image.Filename}</p>
+              <p>{image.Text_caption}</p>
           </div>
-        ))}
+      ))}
       </div>
     </div>
   );
