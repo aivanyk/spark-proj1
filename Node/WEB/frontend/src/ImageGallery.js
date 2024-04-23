@@ -3,6 +3,13 @@ import './index.css';
 import axios from 'axios';
 
 const MAX_FILES = 10;
+let uploadCnt = 0;
+
+// interface LoadingImage {
+//   thumbnailURL: 'https://via.placeholder.com/200';
+//   Filename: string;
+//   Text_caption: 'Still processing';
+// }
 
 const ImageGallery = () => {
   // const [images, setImages] = useState(mockImages);
@@ -12,8 +19,18 @@ const ImageGallery = () => {
   const fetchImages = async () => {
     try {
       const response = await axios.get('/images'); 
-      console.log(response)
-      setImages(response.data); 
+      let toShow = response.data;
+      console.log(`${uploadCnt} toShow: ${toShow}`);
+      const loadCnt = Math.max(0, uploadCnt);
+      for (let i = 1; i <= loadCnt; i++) {
+        toShow.push({
+          thumbnailURL: `https://via.placeholder.com/200`,
+          Filename: `Unknown`,
+          Text_caption: `Still processing`
+        });
+      }
+      console.log(toShow);
+      setImages(toShow); 
     } catch (error) {
       console.error('Error fetching images', error);
     }
@@ -30,12 +47,15 @@ const ImageGallery = () => {
   };
   
   const handleFileUpload = async () => {
+    uploadCnt = 0;
     if (selectedFiles && selectedFiles.length > 0) {
       const formData = new FormData();
       selectedFiles.forEach((file, index) => {
         // console.log(file);
         formData.append('filename', file);
+        uploadCnt += 1;
       });
+      
       console.log("111");
       for (let [key, value] of formData.entries()) {
         console.log(key, value);
@@ -64,6 +84,14 @@ const ImageGallery = () => {
       <div>
         <input type="file" name="filename" multiple onChange={handleFileSelect} />
         <button onClick={handleFileUpload}>Upload</button>
+        <div>
+          <h3>Selected Files:</h3>
+          <ul>
+            {selectedFiles.map((file, index) => (
+              <li key={index}>{file.name}</li> // Display each file name
+            ))}
+          </ul>
+        </div>
       </div>
       <h1> </h1>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px' }}>

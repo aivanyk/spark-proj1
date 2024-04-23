@@ -1,0 +1,42 @@
+{
+  "bindings": [
+    {
+      "name": "myQueueItem",
+      "type": "queueTrigger",
+      "direction": "in",
+      "queueName": "photoqueue",
+      "connection": "storageaccess"
+    },
+    {
+      "name": "myInputBlob",
+      "type": "blob",
+      "dataType": "binary",
+      "path": "image/{queueTrigger}",
+      "connection": "storageaccess",
+      "direction": "in"
+    },
+    {
+      "name": "myThumbnailBlob",
+      "type": "blob",
+      "dataType": "binary",
+      "path": "thumbnail/{queueTrigger}",
+      "connection": "storageaccess",
+      "direction": "out"
+    },
+    {
+      "name": "mySmallBlob",
+      "type": "blob",
+      "dataType": "binary",
+      "path": "small-image/{queueTrigger}",
+      "connection": "storageaccess",
+      "direction": "out"
+    },
+    {
+      "type": "queue",
+      "direction": "out",
+      "name": "outputQueueItem",
+      "queueName": "compute-vision",
+      "connection": "storageaccess"
+    }
+  ]
+}

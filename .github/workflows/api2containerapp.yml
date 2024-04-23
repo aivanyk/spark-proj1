@@ -27,4 +27,4 @@ jobs:
           acrName: assign2api2
           containerAppName: assign2api2app
           resourceGroup: 519Containers
-          environmentVariables: storageaccess=secretref:storageaccess kvsecret3=secretref:kvsecret3
+          environmentVariables: storageaccess=secretref:storageaccess kvsecret3=secretref:kvsecret3 cosmosdb=cosmosdb visionkey=visionkey visionendpoint=visionendpoint photourl=photourl

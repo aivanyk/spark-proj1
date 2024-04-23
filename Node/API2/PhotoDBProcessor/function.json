@@ -1,0 +1,44 @@
+{
+  "bindings": [
+    {
+      "name": "myQueueItem",
+      "type": "queueTrigger",
+      "direction": "in",
+      "queueName": "compute-vision",
+      "connection": "storageaccess"
+    },
+    {
+      "name": "myOriginalBlob",
+      "type": "blob",
+      "dataType": "binary",
+      "path": "image/{queueTrigger}",
+      "connection": "storageaccess",
+      "direction": "in"
+    },
+    {
+      "name": "myThumbnailBlob",
+      "type": "blob",
+      "dataType": "binary",
+      "path": "thumbnail/{queueTrigger}",
+      "connection": "storageaccess",
+      "direction": "in"
+    },
+    {
+      "name": "mySmallBlob",
+      "type": "blob",
+      "dataType": "binary",
+      "path": "small-image/{queueTrigger}",
+      "connection": "storageaccess",
+      "direction": "in"
+    },
+    {
+      "name": "imageDocument",
+      "type": "cosmosDB",
+      "databaseName": "images",
+      "collectionName": "images",
+      "createIfNotExists": true,
+      "connectionStringSetting": "cosmosDB",
+      "direction": "out"
+    }
+  ]
+}

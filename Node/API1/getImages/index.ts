@@ -1,5 +1,4 @@
-import { app, HttpResponseInit, InvocationContext, output, trigger, HttpRequest, input } from "@azure/functions"
-import * as multipart from 'parse-multipart';
+import { app, HttpResponseInit, InvocationContext, input } from "@azure/functions"
 
 const cosmosInput = input.cosmosDB({
     databaseName: 'images',

@@ -84,6 +84,7 @@ app.get('/images', (req, res) => {
   const headers = {
     'Authorization': `Bearer ${accessToken}`, // Add the Authorization header with the token
   };
+  console.log(`!!!!!: ${process.env.API1_BASE_URL}/getImages`);
 
   axios.get(`${process.env.API1_BASE_URL}/getImages`, { headers })
     .then(apiResponse => {
