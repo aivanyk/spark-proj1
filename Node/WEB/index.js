@@ -9,29 +9,6 @@ const app = express();
 const port = process.env.PORT || 3000
 // const API1_BASE_URL = 'https://assign2api1.azurewebsites.net'; 
 
-const mockImages = [
-  {
-    url: 'https://via.placeholder.com/150',
-    description: 'Image 1 Description'
-  },
-  {
-    url: 'https://via.placeholder.com/150',
-    description: 'Image 2 Description'
-  },
-  {
-    url: 'https://via.placeholder.com/150',
-    description: 'Image 3 Description'
-  },
-  {
-    url: 'https://via.placeholder.com/150',
-    description: 'Image 4 Description'
-  },
-  {
-    url: 'https://via.placeholder.com/150',
-    description: 'Image 5 Description'
-  },
-];
-
 // app.use(refreshToken);
 app.use('/', express.static('frontend/build'));
 
